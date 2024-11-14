@@ -1,0 +1,19 @@
+import json
+
+def find_keys_with_exact_match_in_json(data, target="_UFORMAT"):
+    """Searches for an exact match of a string in each value of a JSON object and saves the keys in a list."""
+    keys_with_match = []
+
+    def search(data):
+        if isinstance(data, dict):
+            for key, value in data.items():
+                if isinstance(value, str) and value == target:
+                    keys_with_match.append(key)
+                else:
+                    search(value)
+        elif isinstance(data, list):
+            for item in data:
+                search(item)
+
+    search(data)
+    return keys_with_match
